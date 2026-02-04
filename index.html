@@ -9,26 +9,356 @@
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             background-color: #1A84AE;
             color: #e0f8cf;
             font-family: 'Press Start 2P', cursive;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
             margin: 0;
             text-align: center;
             overflow-x: hidden;
-            padding: 20px 0;
+        }
+
+        /* ===== HERO SECTION - PANTALLA COMPLETA ===== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Fondo animado tipo paisaje 2D */
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* Cielo con gradiente */
+        .sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                    #0a1628 0%,
+                    #1a3a5c 30%,
+                    #1A84AE 60%,
+                    #2d9bc4 100%);
+        }
+
+        /* Estrellas brillantes */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(1px 1px at 160px 120px, #fff, transparent),
+                radial-gradient(2px 2px at 200px 50px, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 250px 90px, #fff, transparent),
+                radial-gradient(2px 2px at 300px 60px, rgba(255, 255, 255, 0.7), transparent);
+            background-size: 350px 200px;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.8;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Nubes pixel art animadas */
+        .clouds {
+            position: absolute;
+            top: 15%;
+            left: 0;
+            width: 200%;
+            height: 80px;
+            animation: moveClouds 60s linear infinite;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 0;
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .cloud-1 {
+            width: 60px;
+            height: 20px;
+            top: 0;
+            left: 10%;
+        }
+
+        .cloud-1::before {
+            width: 30px;
+            height: 15px;
+            top: -10px;
+            left: 10px;
+        }
+
+        .cloud-1::after {
+            width: 20px;
+            height: 10px;
+            top: -5px;
+            left: 35px;
+        }
+
+        .cloud-2 {
+            width: 80px;
+            height: 25px;
+            top: 30px;
+            left: 35%;
+        }
+
+        .cloud-2::before {
+            width: 40px;
+            height: 20px;
+            top: -15px;
+            left: 15px;
+        }
+
+        .cloud-3 {
+            width: 50px;
+            height: 18px;
+            top: 10px;
+            left: 70%;
+        }
+
+        .cloud-3::before {
+            width: 25px;
+            height: 12px;
+            top: -8px;
+            left: 8px;
+        }
+
+        @keyframes moveClouds {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ===== PAISAJE PIXEL ART CON IMÁGENES ===== */
+
+        /* Capa de fondo lejano - para imagen de montañas/horizonte */
+        .bg-layer-far {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            width: 200%;
+            height: 200px;
+            animation: scrollFar 80s linear infinite;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: flex;
+            font-size: 0;
+            line-height: 0;
+        }
+
+        .bg-layer-far img {
+            height: 100%;
+            width: auto;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        @keyframes scrollFar {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Capa media - para imagen de árboles/vegetación */
+        .bg-layer-mid {
+            position: absolute;
+            bottom: 8%;
+            left: 0;
+            width: 200%;
+            height: 150px;
+            animation: scrollMid 40s linear infinite;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: flex;
+            font-size: 0;
+            line-height: 0;
+        }
+
+        .bg-layer-mid img {
+            height: 100%;
+            width: auto;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        @keyframes scrollMid {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Capa de suelo - para imagen de piso/camino */
+        .bg-layer-ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            animation: scrollGround 20s linear infinite;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: flex;
+            font-size: 0;
+            line-height: 0;
+        }
+
+        .bg-layer-ground img {
+            height: 100%;
+            width: auto;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        @keyframes scrollGround {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Fallback si no hay imágenes - suelo simple */
+        .ground-fallback {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 12%;
+            background: linear-gradient(to bottom,
+                    #00c794 0%,
+                    #009576 40%,
+                    #007a5e 100%);
+        }
+
+        /* Decoración pixel del suelo */
+        .ground-pixels {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            animation: scrollGroundPixels 15s linear infinite;
+        }
+
+        /* Flores y detalles pixel */
+        .pixel-flower {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff6b9d;
+            box-shadow:
+                4px 0 0 #ff6b9d,
+                0 4px 0 #ff6b9d,
+                -4px 0 0 #ff6b9d,
+                0 -4px 0 #ff6b9d,
+                0 0 0 #ffcc00;
+        }
+
+        .pixel-grass {
+            position: absolute;
+            width: 4px;
+            height: 12px;
+            background: #00c794;
+        }
+
+        .pixel-grass::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 8px;
+            background: #00c794;
+            left: -6px;
+            top: 4px;
+        }
+
+        .pixel-grass::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 10px;
+            background: #00c794;
+            left: 6px;
+            top: 2px;
+        }
+
+        @keyframes scrollGroundPixels {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         .logo {
             max-width: 120px;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         /* Estilo contenedor tipo caja de diálogo RPG */
@@ -37,9 +367,10 @@
             padding: 40px;
             max-width: 600px;
             width: 90%;
-            background-color: #1a1a1a;
+            background-color: rgba(26, 26, 26, 0.95);
             box-shadow: 10px 10px 0px #000;
-            margin: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
@@ -88,7 +419,6 @@
             animation: blink 1s infinite;
         }
 
-        /* Animación de parpadeo */
         @keyframes blink {
             0% {
                 opacity: 1;
@@ -103,30 +433,36 @@
             }
         }
 
-        /* Flecha animada para scroll */
+        /* Flecha animada para scroll - FUERA de la caja */
         .scroll-indicator {
             display: none;
             flex-direction: column;
             align-items: center;
-            margin-top: 20px;
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             cursor: pointer;
+            z-index: 20;
         }
 
         .scroll-indicator.visible {
             display: flex;
+            animation: bounceHint 2s ease-in-out infinite;
         }
 
         .scroll-text {
             font-size: 10px;
             color: #ffffff;
             margin-bottom: 10px;
-            animation: fadeInOut 2s infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .scroll-arrow {
             font-size: 24px;
             color: #ffffff;
-            animation: bounce 1.5s infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: bounce 1s infinite;
         }
 
         @keyframes bounce {
@@ -148,27 +484,27 @@
             }
         }
 
-        @keyframes fadeInOut {
+        @keyframes bounceHint {
 
             0%,
             100% {
-                opacity: 0.5;
+                transform: translateX(-50%) translateY(0);
             }
 
             50% {
-                opacity: 1;
+                transform: translateX(-50%) translateY(-10px);
             }
         }
 
-        /* Sección de información scroll */
+        /* ===== SECCIÓN DE INFORMACIÓN ===== */
         .info-section {
             border: 4px solid #8b9bb4;
             padding: 30px;
             max-width: 600px;
             width: 90%;
-            background-color: #1a1a1a;
+            background-color: rgba(26, 26, 26, 0.95);
             box-shadow: 10px 10px 0px #000;
-            margin: 20px;
+            margin: 40px auto;
             text-align: left;
         }
 
@@ -227,7 +563,7 @@
 
         /* Botón del portal - Colores Azul y Blanco */
         .portal-button-container {
-            margin-top: 30px;
+            margin: 40px auto;
             display: flex;
             justify-content: center;
         }
@@ -245,6 +581,12 @@
             transition: all 0.2s ease;
             animation: portalPulse 2s infinite;
             text-shadow: 2px 2px #003d7a;
+        }
+
+        @media (max-width: 768px) {
+            .portal-button-container {
+                margin: 15px 20px;
+            }
         }
 
         .portal-button:hover {
@@ -350,7 +692,6 @@
             }
         }
 
-        /* Líneas de velocidad tipo Star Wars */
         .speed-lines {
             position: absolute;
             width: 100%;
@@ -383,7 +724,6 @@
             }
         }
 
-        /* Túnel central */
         .tunnel-center {
             position: absolute;
             width: 20px;
@@ -413,56 +753,97 @@
             }
         }
 
-        /* Decoración pixel art simple con CSS (Montañas) */
-        .landscape {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+        /* Footer spacing */
+        .footer-space {
             height: 100px;
-            background:
-                linear-gradient(to bottom, transparent 50%, #1a472a 50%),
-                linear-gradient(135deg, #1a472a 25%, transparent 25%) -50px 0,
-                linear-gradient(225deg, #1a472a 25%, transparent 25%) -50px 0,
-                linear-gradient(135deg, #2d5a27 25%, transparent 25%),
-                linear-gradient(225deg, #2d5a27 25%, transparent 25%);
-            background-size: 100% 100%, 100px 100px, 100px 100px, 100px 100px, 100px 100px;
-            z-index: -1;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* Espaciado inferior para el landscape */
-        .spacer {
-            height: 120px;
+            background: linear-gradient(to bottom, #1A84AE 0%, #0a1628 100%);
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <img src="logo.png" alt="Logo" class="logo">
-        <h1>BIBLIOTECA DEL FUTURO</h1>
-        <p>SOLE COLOMBIA</p>
+    <!-- HERO SECTION - PANTALLA COMPLETA -->
+    <section class="hero-section">
+        <!-- Fondo animado parallax -->
+        <div class="parallax-bg">
+            <div class="sky"></div>
+            <div class="stars"></div>
 
-        <div id="countdown-box">
-            <p>EL PORTAL SE ABRIRÁ EN:</p>
-            <h2 id="timer">Cargando...</h2>
+            <div class="clouds">
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-3"></div>
+            </div>
+
+            <!-- Capa lejana - Imagen de fondo -->
+            <div class="bg-layer-far">
+                <img src="bg_far.png" alt="">
+                <img src="bg_far.png" alt="">
+                <img src="bg_far.png" alt="">
+                <img src="bg_far.png" alt="">
+                <img src="bg_far.png" alt="">
+            </div>
+
+            <!-- Capa media - AGREGA TU IMAGEN AQUÍ -->
+            <div class="bg-layer-mid">
+                <!-- Descomenta y usa tu imagen:
+                <img src="bg_mid.png" alt="">
+                <img src="bg_mid.png" alt="">
+                -->
+            </div>
+
+            <!-- Suelo con decoración pixel -->
+            <div class="ground-fallback">
+                <div class="ground-pixels">
+                    <!-- Flores y pasto pixel decorativo -->
+                    <div class="pixel-grass" style="left: 5%; bottom: 20px;"></div>
+                    <div class="pixel-flower" style="left: 12%; bottom: 25px;"></div>
+                    <div class="pixel-grass" style="left: 20%; bottom: 15px;"></div>
+                    <div class="pixel-grass" style="left: 28%; bottom: 22px;"></div>
+                    <div class="pixel-flower" style="left: 35%; bottom: 18px; background: #ffcc00;"></div>
+                    <div class="pixel-grass" style="left: 42%; bottom: 20px;"></div>
+                    <div class="pixel-flower" style="left: 50%; bottom: 28px;"></div>
+                    <div class="pixel-grass" style="left: 58%; bottom: 16px;"></div>
+                    <div class="pixel-grass" style="left: 65%; bottom: 24px;"></div>
+                    <div class="pixel-flower" style="left: 72%; bottom: 20px; background: #9b59b6;"></div>
+                    <div class="pixel-grass" style="left: 80%; bottom: 18px;"></div>
+                    <div class="pixel-flower" style="left: 88%; bottom: 22px;"></div>
+                    <div class="pixel-grass" style="left: 95%; bottom: 20px;"></div>
+                </div>
+            </div>
+
+            <!-- Capa de suelo - AGREGA TU IMAGEN AQUÍ -->
+            <div class="bg-layer-ground">
+                <!-- Descomenta y usa tu imagen:
+                <img src="bg_ground.png" alt="">
+                <img src="bg_ground.png" alt="">
+                -->
+            </div>
         </div>
 
-        <div class="loading-container">
-            <div class="loading-bar" id="progress"></div>
-        </div>
-        <div class="status-text" id="status-text">GENERANDO MUNDO...</div>
+        <div class="container">
+            <img src="logo.png" alt="Logo" class="logo">
+            <h1>BIBLIOTECA DEL FUTURO</h1>
+            <p>SOLE COLOMBIA</p>
 
-        <!-- Flecha animada para invitar a scroll -->
+            <div id="countdown-box">
+                <p>EL PORTAL SE ABRIRÁ EN:</p>
+                <h2 id="timer">Cargando...</h2>
+            </div>
+
+            <div class="loading-container">
+                <div class="loading-bar" id="progress"></div>
+            </div>
+            <div class="status-text" id="status-text">GENERANDO MUNDO...</div>
+        </div>
+
+        <!-- Flecha animada FUERA de la caja -->
         <div class="scroll-indicator" id="scroll-indicator" onclick="scrollToInfo()">
-            <span class="scroll-text">DESLIZA PARA CONTINUAR</span>
-            <span class="scroll-arrow">▼</span>
-            <span class="scroll-arrow" style="animation-delay: 0.2s;">▼</span>
+            <span class="scroll-text">▼ DESLIZA PARA CONTINUAR ▼</span>
+            <div class="scroll-arrow">⬇</div>
         </div>
-    </div>
+    </section>
 
     <!-- Sección informativa con scroll -->
     <div class="info-section" id="info-section">
@@ -473,8 +854,8 @@
             <p>ESTE JUEGO USA TU <span style="color: #ffcc00;">CÁMARA</span> Y <span
                     style="color: #ffcc00;">MICRÓFONO</span> PARA CREAR UNA EXPERIENCIA DE VIDEOLLAMADA INTERACTIVA</p>
             <div class="image-placeholder">
-                <img src="WA1.png" alt="Interfaz de cámara"
-                    onerror="this.style.display='none'; this.parentElement.innerHTML='IMAGEN: WA1.png';">
+                <img src="WA1.webp" alt="Interfaz de cámara"
+                    onerror="this.style.display='none'; this.parentElement.innerHTML='IMAGEN: WA1.webp';">
             </div>
         </div>
 
@@ -515,7 +896,7 @@
         </button>
     </div>
 
-    <div class="spacer"></div>
+    <div class="footer-space"></div>
 
     <!-- Overlay de animación Hyperspace Star Wars -->
     <div class="hyperspace-overlay" id="hyperspace-overlay">
@@ -524,8 +905,6 @@
         <div class="tunnel-center" id="tunnel-center"></div>
         <span class="hyperspace-text">Entrando a la Biblioteca del Futuro...</span>
     </div>
-
-    <div class="landscape"></div>
 
     <script>
         // Fecha objetivo: 4 de Febrero 2026, 8:00 AM Hora Colombia (GMT-5)
@@ -538,7 +917,7 @@
         const scrollIndicator = document.getElementById("scroll-indicator");
 
         // MODO PRUEBA: cambiar a false para producción
-        const testMode = true;
+        const testMode = false;
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -585,7 +964,6 @@
                 const star = document.createElement('div');
                 star.className = 'star';
 
-                // Posición aleatoria desde el centro
                 const angle = Math.random() * Math.PI * 2;
                 const distance = Math.random() * 50;
                 const centerX = 50 + Math.cos(angle) * distance;
@@ -624,12 +1002,10 @@
             createStars();
             createSpeedLines();
 
-            // Crear más estrellas durante la animación
             const starInterval = setInterval(() => {
                 createStars();
             }, 500);
 
-            // Después de la animación, redirigir
             setTimeout(() => {
                 clearInterval(starInterval);
                 window.location.href = "https://play.workadventu.re/@/sole-colombia-1768915517/la-biblioteca-del-futuro/la-biblioteca-del-futuro";
